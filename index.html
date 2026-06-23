@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIENDA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="header__logo"><img src="img/logo.png" alt="Tienda Buena Cruz" class="header__logo-img" /></a>
+      <nav class="header__nav" id="header-nav">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#contacto">Contacto</a>
+        <button class="header__carrito-btn" id="btn-carrito">🛒 <span id="carrito-count">0</span></button>
+      </nav>
+      <button class="header__hamburger" id="btn-hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__col-texto">
+        <h1 class="hero__title">Estilo que<br><span>te representa.</span></h1>
+        <p class="hero__desc">Indumentaria femenina, perfumería, accesorios y mucho más.</p>
+        <a class="hero__btn-whatsapp" href="https://wa.me/549XXXXXXXXXX" target="_blank" rel="noopener">
+          <svg class="hero__btn-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.14 1.535 5.877L.057 23.5l5.762-1.512A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.37l-.36-.213-3.418.896.912-3.33-.234-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+          Consultá por WhatsApp
+        </a>
+      </div>
+      <div class="hero__col-imagen">
+        <div class="hero__imagen-wrap">
+          <img src="./img/hero.png" alt="Producto destacado" class="hero__imagen" onerror="this.parentElement.style.background='#f0ede8'" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="beneficios">
+    <div class="beneficios__inner">
+      <div class="beneficio">
+        <div class="beneficio__icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="1" y="3" width="15" height="13" rx="1"/>
+            <path d="M16 8h4l3 5v4h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <p class="beneficio__titulo">Envíos a todo el país</p>
+        <p class="beneficio__desc">Rápidos y seguros</p>
+      </div>
+      <div class="beneficio__separador"></div>
+      <div class="beneficio">
+        <div class="beneficio__icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <p class="beneficio__titulo">Atención personalizada</p>
+        <p class="beneficio__desc">Estamos para ayudarte</p>
+      </div>
+      <div class="beneficio__separador"></div>
+      <div class="beneficio">
+        <div class="beneficio__icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <p class="beneficio__titulo">Pagos seguros</p>
+        <p class="beneficio__desc">Protegemos tus datos</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="categorias">
+    <div class="categorias__inner">
+      <p class="categorias__titulo">Categorías</p>
+      <div class="categorias__grid">
+
+        <div class="categoria-card">
+          <div class="categoria-card__icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/>
+            </svg>
+          </div>
+          <p class="categoria-card__nombre">Indumentaria</p>
+        </div>
+
+        <div class="categoria-card">
+          <div class="categoria-card__icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M9 3h6l1 7H8L9 3z"/>
+              <path d="M8 10c0 5 8 5 8 0"/>
+              <rect x="6" y="17" width="12" height="4" rx="1"/>
+              <line x1="12" y1="10" x2="12" y2="17"/>
+            </svg>
+          </div>
+          <p class="categoria-card__nombre">Perfumería</p>
+        </div>
+
+        <div class="categoria-card">
+          <div class="categoria-card__icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <p class="categoria-card__nombre">Accesorios</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <main id="catalogo" class="catalogo">
+    <p class="catalogo__titulo">Productos Destacados</p>
+    <div class="catalogo__grid" id="grid-productos"></div>
+  </main>
+
+  <footer id="contacto" class="footer">
+    <div class="footer__inner">
+
+      <div class="footer__col">
+        <p class="footer__logo">TIENDA</p>
+        <p class="footer__copy">© 2025 — Todos los derechos reservados</p>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-titulo">Contacto</p>
+        <a class="footer__link" href="https://wa.me/5492236220228" target="_blank" rel="noopener">
+          <svg class="footer__icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.558 4.14 1.535 5.877L.057 23.5l5.762-1.512A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.37l-.36-.213-3.418.896.912-3.33-.234-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
+          +54 9 2236 22-0228
+        </a>
+        <a class="footer__link" href="https://www.instagram.com/tienda_buenacruz?igsh=Y3Fqa25ucXdxYW8z" target="_blank" rel="noopener">
+          <svg class="footer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @tienda_buenacruz
+        </a>
+        <a class="footer__link" href="https://www.tiktok.com/@tiendabuenacruz" target="_blank" rel="noopener">
+          <svg class="footer__icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+          @tiendabuenacruz
+        </a>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-titulo">Nuestra tienda</p>
+        <p class="footer__dato">
+          <svg class="footer__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          San José 1698<br>Bahía Blanca, Argentina
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <div class="popup-overlay" id="popup-overlay">
+    <div class="popup glass" id="popup">
+      <button class="popup__cerrar" id="popup-cerrar">✕</button>
+      <div class="popup__imagen" id="popup-imagen"></div>
+      <div class="popup__info">
+        <h2 class="popup__nombre" id="popup-nombre"></h2>
+        <p class="popup__precio" id="popup-precio"></p>
+        <div id="popup-sabores" style="display:none;">
+          <p class="popup__label">Elegí tu sabor:</p>
+          <div class="popup__opciones" id="popup-opciones-sabores"></div>
+        </div>
+        <div id="popup-geneticas" style="display:none;"></div>
+        <p class="popup__seleccion-actual" id="popup-seleccion-actual"></p>
+        <button class="popup__btn" id="popup-agregar">+ Agregar al carrito</button>
+        <button class="popup__btn popup__btn--volver" id="popup-volver">← Volver</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="carrito-overlay" id="carrito-section">
+    <div class="carrito-box glass">
+      <button class="popup__cerrar carrito-cerrar-x" id="btn-cerrar-carrito">✕</button>
+      <h2 class="carrito-box__titulo">Tu Carrito</h2>
+      <div id="carrito-lista"></div>
+      <div class="carrito-box__total" id="carrito-total"></div>
+      <button class="btn-primary" id="btn-ir-checkout">Finalizar compra →</button>
+      <button class="btn-seguir-comprando" id="btn-seguir-comprando">← Seguir comprando</button>
+      <button class="btn-secondary" id="btn-vaciar-carrito">Vaciar carrito</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-pago">
+    <div class="modal glass">
+      <button class="popup__cerrar carrito-cerrar-x" id="btn-cerrar-modal-pago">✕</button>
+      <h2 class="modal__titulo">Resumen de Pago</h2>
+      <div class="modal-resumen" id="modal-pago-resumen"></div>
+      <div class="usdt-box glass" id="bloque-usdt">
+        <h3 class="usdt-box__titulo">Pago en USDT (TRC20)</h3>
+        <div class="usdt-box__qr">
+          <img src="./img/qr-usdt.png" alt="QR USDT" loading="lazy" onerror="this.style.display='none'" />
+        </div>
+        <div class="usdt-box__datos">
+          <p>
+            <span class="label">Wallet:</span>
+            <span id="wallet-addr">TU_DIRECCION_WALLET_USDT</span>
+            <button class="btn-copy" id="btn-copy-wallet">Copiar</button>
+          </p>
+        </div>
+      </div>
+      <button class="btn-primary" id="btn-continuar-datos">Continuar con mis datos →</button>
+      <button class="btn-seguir-comprando" id="btn-volver-carrito-desde-pago">← Volver al carrito</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-datos">
+    <div class="modal glass">
+      <button class="popup__cerrar carrito-cerrar-x" id="btn-cerrar-modal-datos">✕</button>
+      <h2 class="modal__titulo">Tus Datos de Envío</h2>
+      <form class="checkout-form" id="checkout-form" onsubmit="return false;">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="f-nombre" placeholder="Tu nombre" required />
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="f-telefono" placeholder="Tu teléfono" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="f-email" placeholder="Tu email" required />
+        </div>
+        <div class="form-group">
+          <label>Provincia</label>
+          <input type="text" id="f-provincia" placeholder="Provincia" required />
+        </div>
+        <div class="form-group">
+          <label>Localidad</label>
+          <input type="text" id="f-localidad" placeholder="Localidad" required />
+        </div>
+        <div class="form-group">
+          <label>Dirección</label>
+          <input type="text" id="f-direccion" placeholder="Calle, número, piso/depto" required />
+        </div>
+        <div class="form-group">
+          <label>Sucursal correo</label>
+          <input type="text" id="f-sucursal" placeholder="Sucursal de correo más cercana" />
+        </div>
+        <div class="form-group form-group--check">
+          <label class="check-label">
+            <input type="checkbox" id="f-confirma-pago" />
+            <span>Confirmo que realicé el pago y entiendo que mi pedido será validado manualmente.</span>
+          </label>
+        </div>
+        <button type="button" class="btn-primary" id="btn-enviar-pedido">Confirmar pedido</button>
+        <button type="button" class="btn-seguir-comprando" id="btn-volver-modal-pago">← Volver al pago</button>
+      </form>
+      <div class="checkout-mensaje" id="checkout-mensaje" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacion">
+    <div class="modal glass modal--confirmacion">
+      <div class="confirmacion-icono">✓</div>
+      <h2 class="modal__titulo" style="text-align:center;">Pedido recibido</h2>
+      <div class="confirmacion-texto">
+        <p>Gracias por tu compra.</p>
+        <p>Tu pago será verificado manualmente dentro de 24 a 48 horas.</p>
+        <p>Una vez confirmado, vas a recibir por mail la confirmación y el código de seguimiento correspondiente.</p>
+      </div>
+      <button class="btn-primary" id="btn-cerrar-confirmacion">Cerrar</button>
+    </div>
+  </div>
+
+  <div id="version">v5.0</div>
+
+  <script>
+    // Hamburger mobile menu
+    (function() {
+      var btn = document.getElementById('btn-hamburger');
+      var nav = document.getElementById('header-nav');
+      if (btn && nav) {
+        btn.addEventListener('click', function() {
+          nav.classList.toggle('header__nav--open');
+          btn.classList.toggle('header__hamburger--open');
+        });
+        // Cerrar al clickear un link
+        nav.querySelectorAll('a').forEach(function(a) {
+          a.addEventListener('click', function() {
+            nav.classList.remove('header__nav--open');
+            btn.classList.remove('header__hamburger--open');
+          });
+        });
+      }
+    })();
+  </script>
+  <script src="js/main.js"></script>
+  <script>
+    (function() {
+      var links = document.querySelectorAll('.header__nav a');
+      var secciones = Array.from(links).map(function(a) {
+        var id = a.getAttribute('href').replace('#', '');
+        return { link: a, el: document.getElementById(id) };
+      }).filter(function(s) { return s.el; });
+
+      function marcarActivo() {
+        var scrollY = window.scrollY + 80;
+        var activo = null;
+        secciones.forEach(function(s) {
+          if (s.el.offsetTop <= scrollY) activo = s;
+        });
+        links.forEach(function(a) { a.classList.remove('activo'); });
+        if (activo) activo.link.classList.add('activo');
+      }
+
+      window.addEventListener('scroll', marcarActivo, { passive: true });
+      marcarActivo();
+    })();
+  </script>
+</body>
+</html>
