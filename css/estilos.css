@@ -1313,7 +1313,6 @@ body.popup-abierto {
   }
 
   .hero__col-imagen {
-    order: -1;
     justify-content: stretch;
   }
 
@@ -1754,4 +1753,133 @@ body.popup-abierto {
   color: var(--color-muted);
   line-height: 1.6;
   padding: 0.5rem 0;
+}
+
+/* =====================
+   TIPOGRAFÍA v2.0 — Playfair Display + Lato
+   ===================== */
+
+/* Variables */
+:root {
+  --font-display:  'Playfair Display', Georgia, serif;
+  --font-heading:  'Playfair Display', Georgia, serif;
+  --font-body:     'Lato', sans-serif;
+}
+
+/* Base */
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+/* Títulos → Playfair Display */
+h1, h2, h3, h4,
+.hero__title,
+.catalogo__titulo,
+.categorias__titulo,
+.popup__nombre,
+.carrito-box__titulo,
+.modal__titulo,
+.checkout-box__titulo {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  letter-spacing: 0 !important;
+}
+
+/* Hero title: Playfair bold + itálica para el span */
+.hero__title {
+  font-size: clamp(2.6rem, 6vw, 6rem);
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+
+.hero__title span {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #e8637a;
+}
+
+/* Textos y botones → Lato */
+button, input, label, p, a,
+.header__nav,
+.header__carrito-btn,
+.hero__desc,
+.hero__btn-whatsapp,
+.beneficio__titulo,
+.beneficio__desc,
+.categoria-card__nombre,
+.producto__nombre,
+.producto__desc,
+.producto__precio,
+.producto__btn,
+.popup__label,
+.popup__btn,
+.opcion-btn,
+.footer__copy,
+.carrito-item__nombre,
+.carrito-item__sel,
+.modal-resumen__nombre,
+.btn-primary,
+.btn-secondary,
+.btn-seguir-comprando {
+  font-family: 'Lato', sans-serif !important;
+}
+
+/* Nombre de producto: peso medio, sin mayúsculas */
+.producto__nombre {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+}
+
+/* Precio */
+.producto__precio {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Categorías: Lato semibold, menos pesado */
+.categoria-card__nombre {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+/* Nav */
+.header__nav {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Botón WhatsApp */
+.hero__btn-whatsapp {
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Subtítulos de sección (CATEGORÍAS / PRODUCTOS DESTACADOS) */
+.catalogo__titulo,
+.categorias__titulo {
+  font-family: 'Lato', sans-serif !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+}
+
+/* Carrito y modales: Playfair para título, Lato para resto */
+.carrito-box__titulo,
+.modal__titulo,
+.checkout-box__titulo {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
 }
