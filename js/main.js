@@ -499,7 +499,7 @@ function enviarPedido() {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  var CSV_URL = "TU_URL_CSV_GOOGLE_SHEETS";
+  var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTMajhBLhdtr0C3cRwvn5GnMvJ4MZEcFBHTQsvnIKXKagF_kkhRRsb5YAS3Sa5G1Q/pub?gid=1501993777&single=true&output=csv";
   fetch(CSV_URL)
     .then(function(res) { return res.text(); })
     .then(function(csv) {
