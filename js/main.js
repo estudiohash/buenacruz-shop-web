@@ -629,45 +629,67 @@ function enviarPedido() {
     document.addEventListener("mouseup", onUp);
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
+/* =====================================================
+   CATÁLOGO EN MEMORIA — fuente única de verdad
+   ===================================================== */
+var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTMajhBLhdtr0C3cRwvn5GnMvJ4MZEcFBHTQsvnIKXKagF_kkhRRsb5YAS3Sa5G1Q/pub?gid=1501993777&single=true&output=csv";
 
-  var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTMajhBLhdtr0C3cRwvn5GnMvJ4MZEcFBHTQsvnIKXKagF_kkhRRsb5YAS3Sa5G1Q/pub?gid=1501993777&single=true&output=csv";
+function parsearCSV(csv) {
+  var lineas = csv.split("\n").slice(1);
+  var lista = [];
+  lineas.forEach(function(linea, i) {
+    if (!linea.trim()) return;
+    var cols = linea.split(",");
+    var nombreVal    = (cols[0] || "").trim().replace(/^"|"$/g, "");
+    var precioBase   = parseFloat((cols[1] || "0").trim().replace(/^"|"$/g, "").replace(/[^\d.]/g, "")) || 0;
+    var categoriaVal = (cols[2] || "").trim().replace(/^"|"$/g, "");
+    var geneticasVal = (cols[3] || "").trim().replace(/^"|"$/g, "");
+    var imagenVal    = (cols[7] || "").trim().replace(/^"|"$/g, "");
+    var mostrarHome  = (cols[8] || "").trim().replace(/^"|"$/g, "").toLowerCase() === "true";
+    if (!nombreVal) return;
+    var obj = {
+      id:          i + 1,
+      nombre:      nombreVal,
+      precio:      "$" + precioBase.toLocaleString("es-AR"),
+      precioNum:   precioBase,
+      imgSrc:      imagenVal || "",
+      tipo:        categoriaVal,
+      mostrarHome: mostrarHome
+    };
+    if (geneticasVal) {
+      obj.geneticas = geneticasVal.split("|").map(function(g) { return g.trim(); });
+    }
+    lista.push(obj);
+  });
+  return lista;
+}
+
+function cargarCatalogo(callback) {
   fetch(CSV_URL)
     .then(function(res) { return res.text(); })
     .then(function(csv) {
-      var lineas = csv.split("\n").slice(1);
-      var lista = [];
-      lineas.forEach(function(linea, i) {
-        if (!linea.trim()) return;
-        var cols = linea.split(",");
-        var nombreVal    = (cols[0] || "").trim().replace(/^"|"$/g, "");
-        var precioBase   = parseFloat((cols[1] || "0").trim().replace(/^"|"$/g, "").replace(/[^\d.]/g, "")) || 0;
-        var categoriaVal = (cols[2] || "").trim().replace(/^"|"$/g, "");
-        var geneticasVal = (cols[3] || "").trim().replace(/^"|"$/g, "");
-        var imagenVal    = (cols[7] || "").trim().replace(/^"|"$/g, "");
-        var mostrarHome  = (cols[8] || "").trim().replace(/^"|"$/g, "").toLowerCase() === "true";
-        if (!nombreVal) return;
-        var obj = {
-          id:          i + 1,
-          nombre:      nombreVal,
-          precio:      "$" + precioBase.toLocaleString("es-AR"),
-          precioNum:   precioBase,
-          imgSrc:      imagenVal || "",
-          tipo:        categoriaVal,
-          mostrarHome: mostrarHome
-        };
-        if (geneticasVal) {
-          obj.geneticas = geneticasVal.split("|").map(function(g) { return g.trim(); });
-        }
-        lista.push(obj);
-      });
+      var lista = parsearCSV(csv);
       catalogoMemoria = lista;
-      renderizarProductos(lista);
+      if (typeof callback === "function") callback(lista);
+      else renderizarProductos(lista);
     })
     .catch(function() {
       catalogoMemoria = productos;
       renderizarProductos(productos);
     });
+}
+
+// Recarga manual desde Google Sheets y re-renderiza
+function recargarCatalogo() {
+  cargarCatalogo(function(lista) {
+    renderizarProductos(lista);
+  });
+}
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+  // Carga inicial — una sola descarga del CSV
+  cargarCatalogo();
 
   document.getElementById("popup-cerrar").addEventListener("click", cerrarPopup);
   document.getElementById("popup-overlay").addEventListener("click", function(e) {
