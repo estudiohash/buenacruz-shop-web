@@ -158,37 +158,147 @@ function cerrarTodosLosOverlays() {
   document.body.classList.remove("popup-abierto");
 }
 
-function renderizarProductos(lista) {
-  var grid = document.getElementById("grid-productos");
-  if (!grid) return;
-  grid.innerHTML = "";
-  lista.forEach(function(p) {
-    var card = document.createElement("article");
-    card.className = "producto";
-    var imagenHTML = p.imgSrc
-      ? '<img src="' + p.imgSrc + '" alt="' + p.nombre + '" loading="lazy"' +
-        ' onerror="this.style.display=\'none\';this.parentElement.querySelector(\'.producto__imagen--placeholder\').style.display=\'flex\'" />' +
-        '<span class="producto__imagen--placeholder" style="display:none">sin imagen</span>'
-      : '<span class="producto__imagen--placeholder">sin imagen</span>';
-    card.innerHTML =
-      '<div class="producto__imagen">' + imagenHTML + '</div>' +
-      '<div class="producto__info">' +
-        '<h3 class="producto__nombre">' + p.nombre + '</h3>' +
-        '<hr class="producto__divider">' +
-        '<p class="producto__precio">' + p.precio + '</p>' +
-        '<button class="producto__btn">+ Agregar</button>' +
-      '</div>';
-    var abrirFn = function() { abrirPopup(p); };
-    card.addEventListener("click", function(e) {
-      if (e.target.classList.contains("producto__btn")) return;
-      abrirFn();
-    });
-    card.querySelector(".producto__btn").addEventListener("click", function(e) {
-      e.stopPropagation();
-      abrirFn();
-    });
-    grid.appendChild(card);
+/* =====================================================
+   CARRUSELES — Motor de render por categoría
+   ===================================================== */
+
+function crearTarjetaProducto(p) {
+  var card = document.createElement("article");
+  card.className = "producto";
+  var imagenHTML = p.imgSrc
+    ? '<img src="' + p.imgSrc + '" alt="' + p.nombre + '" loading="lazy"' +
+      ' onerror="this.style.display=\'none\';this.parentElement.querySelector(\'.producto__imagen--placeholder\').style.display=\'flex\'" />' +
+      '<span class="producto__imagen--placeholder" style="display:none">sin imagen</span>'
+    : '<span class="producto__imagen--placeholder">sin imagen</span>';
+  card.innerHTML =
+    '<div class="producto__imagen">' + imagenHTML + '</div>' +
+    '<div class="producto__info">' +
+      '<h3 class="producto__nombre">' + p.nombre + '</h3>' +
+      '<hr class="producto__divider">' +
+      '<p class="producto__precio">' + p.precio + '</p>' +
+      '<button class="producto__btn">+ Agregar</button>' +
+    '</div>';
+  var abrirFn = function() { abrirPopup(p); };
+  card.addEventListener("click", function(e) {
+    if (e.target.classList.contains("producto__btn")) return;
+    abrirFn();
   });
+  card.querySelector(".producto__btn").addEventListener("click", function(e) {
+    e.stopPropagation();
+    abrirFn();
+  });
+  return card;
+}
+
+function crearCarrusel(titulo, lista, idPrefix) {
+  var VISIBLE = 9;
+  var estaExpandido = false;
+
+  var seccion = document.createElement("section");
+  seccion.className = "carrusel-seccion";
+  seccion.id = "sec-" + idPrefix;
+
+  // Header
+  var header = document.createElement("div");
+  header.className = "carrusel-header";
+  header.innerHTML =
+    '<h2 class="carrusel__titulo">' + titulo + '</h2>' +
+    '<div class="carrusel-header__acciones">' +
+      '<button class="carrusel__flecha carrusel__flecha--izq" aria-label="Anterior">&#8592;</button>' +
+      '<button class="carrusel__flecha carrusel__flecha--der" aria-label="Siguiente">&#8594;</button>' +
+      '<button class="carrusel__ver-todos">Ver todos (' + lista.length + ')</button>' +
+    '</div>';
+
+  // Track
+  var trackWrap = document.createElement("div");
+  trackWrap.className = "carrusel-wrap";
+
+  var track = document.createElement("div");
+  track.className = "carrusel-track";
+  trackWrap.appendChild(track);
+
+  // Grid expandido (oculto por defecto)
+  var gridTodos = document.createElement("div");
+  gridTodos.className = "catalogo__grid carrusel-grid-todos";
+  gridTodos.style.display = "none";
+
+  seccion.appendChild(header);
+  seccion.appendChild(trackWrap);
+  seccion.appendChild(gridTodos);
+
+  // Render inicial: primeros VISIBLE productos en carrusel
+  lista.slice(0, VISIBLE).forEach(function(p) {
+    track.appendChild(crearTarjetaProducto(p));
+  });
+
+  // Render completo en grid
+  lista.forEach(function(p) {
+    gridTodos.appendChild(crearTarjetaProducto(p));
+  });
+
+  // Flechas
+  var btnIzq = header.querySelector(".carrusel__flecha--izq");
+  var btnDer = header.querySelector(".carrusel__flecha--der");
+  var SCROLL_PX = 280;
+
+  btnIzq.addEventListener("click", function() {
+    trackWrap.scrollBy({ left: -SCROLL_PX, behavior: "smooth" });
+  });
+  btnDer.addEventListener("click", function() {
+    trackWrap.scrollBy({ left: SCROLL_PX, behavior: "smooth" });
+  });
+
+  // Ocultar flechas cuando grid está expandido
+  function actualizarFlechas() {
+    var visible = !estaExpandido;
+    btnIzq.style.display = visible ? "" : "none";
+    btnDer.style.display = visible ? "" : "none";
+  }
+
+  // Ver todos
+  var btnVerTodos = header.querySelector(".carrusel__ver-todos");
+  btnVerTodos.addEventListener("click", function() {
+    estaExpandido = !estaExpandido;
+    if (estaExpandido) {
+      trackWrap.style.display = "none";
+      gridTodos.style.display = "grid";
+      btnVerTodos.textContent = "← Ver menos";
+    } else {
+      trackWrap.style.display = "";
+      gridTodos.style.display = "none";
+      btnVerTodos.textContent = "Ver todos (" + lista.length + ")";
+      seccion.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    actualizarFlechas();
+  });
+
+  actualizarFlechas();
+  return seccion;
+}
+
+function renderizarCarruseles(lista) {
+  var container = document.getElementById("carruseles-container");
+  if (!container) return;
+  container.innerHTML = "";
+
+  // Agrupar por categoría, solo productos con mostrar_home = true
+  var categorias = {};
+  lista.forEach(function(p) {
+    if (!p.mostrarHome) return;
+    var cat = (p.tipo || "Sin categoría").trim();
+    if (!categorias[cat]) categorias[cat] = [];
+    categorias[cat].push(p);
+  });
+
+  Object.keys(categorias).forEach(function(cat) {
+    var idSafe = cat.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+    container.appendChild(crearCarrusel(cat, categorias[cat], idSafe));
+  });
+}
+
+// Mantener compatibilidad: si algo llama renderizarProductos, no rompe
+function renderizarProductos(lista) {
+  renderizarCarruseles(lista);
 }
 
 var productoActual  = null;
@@ -497,7 +607,28 @@ function enviarPedido() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+  // Drag scroll en desktop para carruseles
+  document.addEventListener("mousedown", function(e) {
+    var wrap = e.target.closest(".carrusel-wrap");
+    if (!wrap) return;
+    var startX = e.pageX - wrap.offsetLeft;
+    var scrollLeft = wrap.scrollLeft;
+    wrap.dataset.dragging = "1";
+    function onMove(ev) {
+      if (!wrap.dataset.dragging) return;
+      var x = ev.pageX - wrap.offsetLeft;
+      wrap.scrollLeft = scrollLeft - (x - startX);
+    }
+    function onUp() {
+      delete wrap.dataset.dragging;
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onUp);
+    }
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
 
   var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTMajhBLhdtr0C3cRwvn5GnMvJ4MZEcFBHTQsvnIKXKagF_kkhRRsb5YAS3Sa5G1Q/pub?gid=1501993777&single=true&output=csv";
   fetch(CSV_URL)
@@ -512,15 +643,17 @@ document.addEventListener("DOMContentLoaded", function() {
         var precioBase   = parseFloat((cols[1] || "0").trim().replace(/^"|"$/g, "").replace(/[^\d.]/g, "")) || 0;
         var categoriaVal = (cols[2] || "").trim().replace(/^"|"$/g, "");
         var geneticasVal = (cols[3] || "").trim().replace(/^"|"$/g, "");
-        var imagenVal    = (cols[4] || "").trim().replace(/^"|"$/g, "");
+        var imagenVal    = (cols[7] || "").trim().replace(/^"|"$/g, "");
+        var mostrarHome  = (cols[8] || "").trim().replace(/^"|"$/g, "").toLowerCase() === "true";
         if (!nombreVal) return;
         var obj = {
-          id:       i + 1,
-          nombre:   nombreVal,
-          precio:   "$" + precioBase.toLocaleString("es-AR"),
-          precioNum: precioBase,
-          imgSrc:   imagenVal || "",
-          tipo:     categoriaVal
+          id:          i + 1,
+          nombre:      nombreVal,
+          precio:      "$" + precioBase.toLocaleString("es-AR"),
+          precioNum:   precioBase,
+          imgSrc:      imagenVal || "",
+          tipo:        categoriaVal,
+          mostrarHome: mostrarHome
         };
         if (geneticasVal) {
           obj.geneticas = geneticasVal.split("|").map(function(g) { return g.trim(); });

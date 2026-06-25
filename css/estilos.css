@@ -1883,3 +1883,157 @@ button, input, label, p, a,
   text-transform: none !important;
   letter-spacing: 0 !important;
 }
+
+/* =====================================================
+   CARRUSELES — Cambio 22
+   ===================================================== */
+
+/* Sección contenedora */
+.carrusel-seccion {
+  padding: 3rem var(--space-md) 0;
+  border-bottom: 1px solid #f0eeec;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.carrusel-seccion:last-child {
+  border-bottom: none;
+  padding-bottom: 3rem;
+}
+
+/* Header de sección */
+.carrusel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.carrusel__titulo {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #999;
+  margin: 0;
+}
+
+.carrusel-header__acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Flechas */
+.carrusel__flecha {
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: 1px solid #e0dbd8;
+  border-radius: 50%;
+  color: #555;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  flex-shrink: 0;
+}
+
+.carrusel__flecha:hover {
+  background: #f5f2ee;
+  border-color: #c8c4c0;
+  color: #111;
+}
+
+/* Botón "Ver todos" */
+.carrusel__ver-todos {
+  background: transparent;
+  border: 1px solid #e0dbd8;
+  border-radius: 20px;
+  color: #555;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.carrusel__ver-todos:hover {
+  background: #f5f2ee;
+  border-color: #c8c4c0;
+  color: #111;
+}
+
+/* Wrapper con scroll horizontal */
+.carrusel-wrap {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE/Edge */
+  padding-bottom: 1.5rem;
+  cursor: grab;
+}
+
+.carrusel-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.carrusel-wrap:active {
+  cursor: grabbing;
+}
+
+/* Track de cards */
+.carrusel-track {
+  display: flex;
+  gap: 0.85rem;
+  width: max-content;
+}
+
+.carrusel-track .producto {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+/* Grid expandido "Ver todos" */
+.carrusel-grid-todos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.85rem;
+  padding-bottom: 2rem;
+}
+
+/* Ajuste catálogo general cuando hay carruseles */
+.catalogo {
+  padding: 0 0 2rem;
+}
+
+/* ── RESPONSIVE CARRUSEL ── */
+@media (max-width: 768px) {
+  .carrusel-seccion {
+    padding: 2rem var(--space-sm) 0;
+  }
+
+  .carrusel-track .producto {
+    width: 165px;
+  }
+
+  .carrusel-grid-todos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .carrusel__ver-todos {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.7rem;
+  }
+}
