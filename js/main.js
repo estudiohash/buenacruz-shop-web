@@ -46,6 +46,7 @@ var productos = [
 ];
 
 var carrito = [];
+var catalogoMemoria = [];
 var descuentoAplicado = 0;
 var codigoAplicado = "";
 
@@ -660,9 +661,11 @@ function enviarPedido() {
         }
         lista.push(obj);
       });
+      catalogoMemoria = lista;
       renderizarProductos(lista);
     })
     .catch(function() {
+      catalogoMemoria = productos;
       renderizarProductos(productos);
     });
 
