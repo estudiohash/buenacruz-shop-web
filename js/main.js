@@ -565,12 +565,13 @@ function createMercadoPagoPreference(data) {
     var controller = new AbortController();
     var timeout = setTimeout(function() {
       controller.abort();
-      reject(new Error("Tiempo de espera agotado. Intentá de nuevo."));
+      reject(new Error("Tiempo de espera agotado. Intent\u00E1 de nuevo."));
     }, 20000);
 
     fetch(APPS_SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      redirect: "follow",
+      headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(Object.assign({ _method: "CREATE_MP_PREFERENCE" }, data)),
       signal: controller.signal
     })
@@ -581,7 +582,7 @@ function createMercadoPagoPreference(data) {
     })
     .then(function(json) {
       if (json.success === false) {
-        reject(new Error(json.message || "El servidor rechazó la solicitud."));
+        reject(new Error(json.message || "El servidor rechaz\u00F3 la solicitud."));
       } else {
         resolve({ preferenceId: json.preferenceId, initPoint: json.init_point });
       }
@@ -589,7 +590,7 @@ function createMercadoPagoPreference(data) {
     .catch(function(err) {
       clearTimeout(timeout);
       if (err.name === "AbortError") {
-        reject(new Error("Tiempo de espera agotado. Intentá de nuevo."));
+        reject(new Error("Tiempo de espera agotado. Intent\u00E1 de nuevo."));
       } else {
         reject(err);
       }
