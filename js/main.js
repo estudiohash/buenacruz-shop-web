@@ -840,14 +840,17 @@ function recargarCatalogo() {
     if (e.target === this) cerrarTodosLosOverlays();
   });
 
-  document.getElementById("btn-copy-wallet").addEventListener("click", function() {
-    var wallet = document.getElementById("wallet-addr").textContent;
-    navigator.clipboard.writeText(wallet).then(function() {
-      var btn = document.getElementById("btn-copy-wallet");
-      btn.textContent = "\u2713 Copiado";
-      setTimeout(function() { btn.textContent = "Copiar"; }, 2000);
+  var btnCopyWallet = document.getElementById("btn-copy-wallet");
+  if (btnCopyWallet) {
+    btnCopyWallet.addEventListener("click", function() {
+      var wallet = document.getElementById("wallet-addr").textContent;
+      navigator.clipboard.writeText(wallet).then(function() {
+        var btn = document.getElementById("btn-copy-wallet");
+        btn.textContent = "\u2713 Copiado";
+        setTimeout(function() { btn.textContent = "Copiar"; }, 2000);
+      });
     });
-  });
+  }
 
   document.getElementById("btn-pagar-mercadopago").addEventListener("click", function() {
     if (carrito.length === 0) { alert("Tu carrito est\u00E1 vac\u00EDo."); return; }
