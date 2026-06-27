@@ -123,11 +123,14 @@ function mostrarToast(texto) {
   requestAnimationFrame(function() {
     requestAnimationFrame(function() { toast.classList.add("toast--visible"); });
   });
-  document.getElementById("toast-ver-carrito").addEventListener("click", function() {
-    ocultarToast();
-    renderizarCarrito();
-    abrirOverlay("carrito-section");
-  });
+  var toastVerCarrito = document.getElementById("toast-ver-carrito");
+  if (toastVerCarrito) {
+    toastVerCarrito.addEventListener("click", function() {
+      ocultarToast();
+      renderizarCarrito();
+      abrirOverlay("carrito-section");
+    });
+  }
   setTimeout(ocultarToast, 3500);
 }
 
