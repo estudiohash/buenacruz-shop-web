@@ -557,6 +557,46 @@ function renderizarResumenPago() {
   res.appendChild(totalRow);
 }
 
+/* =====================================================
+   MERCADO PAGO — preferencia de pago
+   ===================================================== */
+function createMercadoPagoPreference(data) {
+  return new Promise(function(resolve, reject) {
+    var controller = new AbortController();
+    var timeout = setTimeout(function() {
+      controller.abort();
+      reject(new Error("Tiempo de espera agotado. Intentá de nuevo."));
+    }, 20000);
+
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({ _method: "CREATE_MP_PREFERENCE" }, data)),
+      signal: controller.signal
+    })
+    .then(function(res) {
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error("Error HTTP " + res.status);
+      return res.json();
+    })
+    .then(function(json) {
+      if (json.success === false) {
+        reject(new Error(json.message || "El servidor rechazó la solicitud."));
+      } else {
+        resolve({ preferenceId: json.preferenceId, initPoint: json.init_point });
+      }
+    })
+    .catch(function(err) {
+      clearTimeout(timeout);
+      if (err.name === "AbortError") {
+        reject(new Error("Tiempo de espera agotado. Intentá de nuevo."));
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
 function enviarPedido() {
   if (carrito.length === 0) { alert("Tu carrito está vacío."); return; }
   var nombre    = document.getElementById("f-nombre").value.trim();
@@ -628,6 +668,7 @@ function enviarPedido() {
    CATÁLOGO EN MEMORIA — fuente única de verdad
    ===================================================== */
 var CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTMajhBLhdtr0C3cRwvn5GnMvJ4MZEcFBHTQsvnIKXKagF_kkhRRsb5YAS3Sa5G1Q/pub?gid=1501993777&single=true&output=csv";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdXyhmfJkrj8z4kl4h2F1po7bPQsiEC6u7FhKui39BNJLwLteu1P5kJEj4y6E_IgQg/exec";
 
 function parsearCSV(csv) {
   var lineas = csv.split("\n").slice(1);
@@ -803,9 +844,34 @@ function recargarCatalogo() {
     var wallet = document.getElementById("wallet-addr").textContent;
     navigator.clipboard.writeText(wallet).then(function() {
       var btn = document.getElementById("btn-copy-wallet");
-      btn.textContent = "✓ Copiado";
+      btn.textContent = "\u2713 Copiado";
       setTimeout(function() { btn.textContent = "Copiar"; }, 2000);
     });
+  });
+
+  document.getElementById("btn-pagar-mercadopago").addEventListener("click", function() {
+    if (carrito.length === 0) { alert("Tu carrito est\u00E1 vac\u00EDo."); return; }
+    var btn = document.getElementById("btn-pagar-mercadopago");
+    btn.textContent = "Procesando...";
+    btn.disabled = true;
+
+    var items = carrito.map(function(item) {
+      return {
+        title: item.nombre + (item.variante ? " \u2014 " + item.variante : ""),
+        quantity: 1,
+        unit_price: item.precioNum
+      };
+    });
+
+    createMercadoPagoPreference({ items: items, total: calcularTotal() })
+      .then(function(result) {
+        window.location.href = result.initPoint;
+      })
+      .catch(function(err) {
+        btn.textContent = "PAGAR CON MERCADO PAGO";
+        btn.disabled = false;
+        alert("No fue posible iniciar el pago. " + (err.message || "Intentá de nuevo."));
+      });
   });
 
   document.addEventListener("keydown", function(e) {
