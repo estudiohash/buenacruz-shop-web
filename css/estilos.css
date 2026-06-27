@@ -8,23 +8,23 @@
 }
 
 :root {
-  --color-bg:       #0f1410;
-  --color-surface:  rgba(255, 255, 255, 0.06);
-  --color-border:   rgba(255, 255, 255, 0.10);
-  --color-text:     #e8e4dc;
-  --color-muted:    #8a9186;
-  --color-accent:   #e8637a;
+  --color-bg:       #ffffff;
+  --color-surface:  #ffffff;
+  --color-border:   #ede8e3;
+  --color-text:     #1a1118;
+  --color-muted:    #a89aaa;
+  --color-accent:   #c4607a;        /* rosa apagado, elegante */
 
-  --font-display:   'Anton', sans-serif;
-  --font-heading:   'Anton', 'Bebas Neue', 'Arial Black', sans-serif;
-  --font-body:      'Inter', sans-serif;
+  --font-display:   'Cormorant Garant', Georgia, serif;
+  --font-heading:   'Cormorant Garant', Georgia, serif;
+  --font-body:      'DM Sans', sans-serif;
 
   --space-xs:  0.5rem;
   --space-sm:  1rem;
   --space-md:  1.25rem;
   --space-lg:  3rem;
 
-  --radius:    6px;
+  --radius:    4px;
   --max-width: 1400px;
 }
 
@@ -448,31 +448,24 @@ a {
    TARJETA DE PRODUCTO
    ===================== */
 .producto {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #ede8e3;
+  border-radius: 4px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(12px) saturate(130%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
   cursor: pointer;
 }
 
 .producto:hover {
-  transform: translateY(-3px) scale(1.02);
-  background: rgba(255, 255, 255, 0.11);
-  border-color: rgba(200, 212, 184, 0.18);
-  border-top-color: rgba(200, 212, 184, 0.32);
-  box-shadow:
-    0 12px 36px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(180, 210, 160, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  transform: none;
+  background: #ffffff;
+  border-color: #c4607a;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .producto__imagen {
@@ -548,24 +541,25 @@ a {
 
 .producto__btn {
   margin-top: 0.5rem;
-  padding: 0.45rem 1rem;
+  padding: 0.4rem 1rem;
   background: transparent;
-  border: 1px solid var(--color-accent);
+  border: 1px solid #ddd;
   border-radius: var(--radius);
-  color: var(--color-accent);
+  color: #888;
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: border-color 0.2s, color 0.2s;
   width: 100%;
 }
 
 .producto__btn:hover {
-  background: var(--color-accent);
-  color: #ffffff;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: transparent;
 }
 
 /* =====================
@@ -711,25 +705,25 @@ a {
 
 .popup__btn {
   margin-top: var(--space-xs);
-  padding: 0.8rem var(--space-sm);
-  background: var(--color-accent);
+  padding: 0.7rem var(--space-sm);
+  background: transparent;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius);
-  color: #ffffff;
+  color: var(--color-accent);
   font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition: background 0.2s, color 0.2s;
   width: 100%;
 }
 
 .popup__btn:hover {
-  background: #c91050;
-  border-color: #c91050;
-  transform: translateY(-1px);
+  background: var(--color-accent);
+  color: #ffffff;
+  transform: none;
 }
 
 .popup__btn--volver {
@@ -1039,26 +1033,26 @@ body.popup-abierto {
 
 /* Botones primario / secundario */
 .btn-primary {
-  padding: 0.8rem var(--space-sm);
-  background: var(--color-accent);
+  padding: 0.7rem var(--space-sm);
+  background: transparent;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius);
-  color: #ffffff;
+  color: var(--color-accent);
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s, color 0.2s;
   width: 100%;
   margin-top: var(--space-xs);
 }
 
 .btn-primary:hover {
-  background: #c91050;
-  border-color: #c91050;
-  transform: translateY(-1px);
+  background: var(--color-accent);
+  color: #ffffff;
+  transform: none;
 }
 
 .btn-secondary {
@@ -1774,24 +1768,24 @@ body.popup-abierto {
   padding: 0.5rem 0;
 }
 
-/* =====================
-   TIPOGRAFÍA v2.0 — Playfair Display + Lato
-   ===================== */
+/* =====================================================
+   TIPOGRAFÍA — Cormorant Garant + DM Sans
+   ===================================================== */
 
-/* Variables */
 :root {
-  --font-display:  'Playfair Display', Georgia, serif;
-  --font-heading:  'Playfair Display', Georgia, serif;
-  --font-body:     'Lato', sans-serif;
+  --font-display:  'Cormorant Garant', Georgia, serif;
+  --font-heading:  'Cormorant Garant', Georgia, serif;
+  --font-body:     'DM Sans', sans-serif;
 }
 
-/* Base */
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 400;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
-/* Títulos → Playfair Display */
+/* Títulos → Cormorant Garant */
 h1, h2, h3, h4,
 .hero__title,
 .catalogo__titulo,
@@ -1800,27 +1794,28 @@ h1, h2, h3, h4,
 .carrito-box__titulo,
 .modal__titulo,
 .checkout-box__titulo {
-  font-family: 'Playfair Display', Georgia, serif !important;
-  letter-spacing: 0 !important;
+  font-family: 'Cormorant Garant', Georgia, serif !important;
+  letter-spacing: 0.01em !important;
 }
 
-/* Hero title: Playfair bold + itálica para el span */
+/* Hero title */
 .hero__title {
-  font-size: clamp(2.6rem, 6vw, 6rem);
-  font-weight: 700;
-  line-height: 1.05;
+  font-size: clamp(2.8rem, 6vw, 6.5rem);
+  font-weight: 600;
+  line-height: 1.02;
   text-transform: none !important;
   letter-spacing: -0.01em !important;
+  color: #1a1118;
 }
 
 .hero__title span {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Cormorant Garant', Georgia, serif;
   font-style: italic;
   font-weight: 400;
   color: var(--color-accent);
 }
 
-/* Textos y botones → Lato */
+/* Textos y botones → DM Sans */
 button, input, label, p, a,
 .header__nav,
 .header__carrito-btn,
@@ -1843,64 +1838,77 @@ button, input, label, p, a,
 .btn-primary,
 .btn-secondary,
 .btn-seguir-comprando {
-  font-family: 'Lato', sans-serif !important;
+  font-family: 'DM Sans', sans-serif !important;
 }
 
-/* Nombre de producto: peso medio, sin mayúsculas */
+/* Producto */
 .producto__nombre {
-  font-size: 0.9rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.01em !important;
-  text-transform: none !important;
-}
-
-/* Precio */
-.producto__precio {
-  font-size: 1rem !important;
-  font-weight: 700 !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
   letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: #1a1118 !important;
 }
 
-/* Categorías: Lato semibold, menos pesado */
-.categoria-card__nombre {
-  font-size: 0.8rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.12em !important;
+.producto__precio {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  color: var(--color-accent) !important;
+}
+
+/* Subtítulos de sección */
+.catalogo__titulo,
+.categorias__titulo,
+.carrusel__titulo {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.62rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.25em !important;
   text-transform: uppercase !important;
+  color: var(--color-muted) !important;
+}
+
+/* Modales */
+.carrito-box__titulo,
+.modal__titulo {
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: #1a1118 !important;
 }
 
 /* Nav */
 .header__nav {
-  font-size: 0.78rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  color: #444 !important;
 }
 
-/* Botón WhatsApp */
-.hero__btn-whatsapp {
-  font-size: 0.82rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.05em !important;
-}
-
-/* Subtítulos de sección (CATEGORÍAS / PRODUCTOS DESTACADOS) */
-.catalogo__titulo,
-.categorias__titulo {
-  font-family: 'Lato', sans-serif !important;
-  font-size: 0.68rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.22em !important;
+/* Categorías */
+.categoria-card__nombre {
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
+  color: #444 !important;
 }
 
-/* Carrito y modales: Playfair para título, Lato para resto */
-.carrito-box__titulo,
-.modal__titulo,
-.checkout-box__titulo {
-  font-size: 1.4rem !important;
-  font-weight: 700 !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
+/* Botón WhatsApp hero */
+.hero__btn-whatsapp {
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.08em !important;
+  background: transparent !important;
+  border: 1px solid var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+.hero__btn-whatsapp:hover {
+  background: var(--color-accent) !important;
+  color: #fff !important;
+  transform: none !important;
 }
 
 /* =====================================================
@@ -2060,38 +2068,43 @@ button, input, label, p, a,
 
 /* === Mercado Pago button & payment notice === */
 .btn-mercadopago {
-  background: #009ee3;
-  color: #fff;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  font-weight: 500;
+  letter-spacing: 0.1em;
 }
 .btn-mercadopago:hover {
-  background: #0082c0;
+  background: var(--color-accent);
+  color: #fff;
 }
 .modal-aviso-pago {
-  font-size: 0.82rem;
-  color: var(--color-text-light, #888);
+  font-size: 0.75rem;
+  color: var(--color-muted);
   text-align: center;
   margin: 0.3rem 0 0.8rem;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 /* === WhatsApp pedido button === */
 .btn-whatsapp-pedido {
   display: block;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.7rem 1rem;
   margin-top: 0.5rem;
-  background: #25d366;
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border: none;
-  border-radius: 6px;
+  background: transparent;
+  color: #555;
+  font-weight: 500;
+  font-size: 0.78rem;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
   cursor: pointer;
-  letter-spacing: 0.01em;
-  transition: background 0.2s;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 0.2s, color 0.2s;
 }
 .btn-whatsapp-pedido:hover {
-  background: #1ebe5d;
+  border-color: #25d366;
+  color: #25d366;
+  background: transparent;
 }
