@@ -571,11 +571,12 @@ function createMercadoPagoPreference(data) {
       reject(new Error("Tiempo de espera agotado. Intent\u00E1 de nuevo."));
     }, 20000);
 
-    fetch(APPS_SCRIPT_URL, {
-      method: "POST",
+    var payload = JSON.stringify(Object.assign({ _method: "CREATE_MP_PREFERENCE" }, data));
+    var url = APPS_SCRIPT_URL + "?payload=" + encodeURIComponent(payload);
+
+    fetch(url, {
+      method: "GET",
       redirect: "follow",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify(Object.assign({ _method: "CREATE_MP_PREFERENCE" }, data)),
       signal: controller.signal
     })
     .then(function(res) {
