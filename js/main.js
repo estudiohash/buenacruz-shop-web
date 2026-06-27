@@ -584,7 +584,12 @@ function createMercadoPagoPreference(data) {
       if (json.success === false) {
         reject(new Error(json.message || "El servidor rechaz\u00F3 la solicitud."));
       } else {
-        resolve({ preferenceId: json.preferenceId, initPoint: json.init_point });
+        var ip = json.init_point || json.initPoint || json.sandbox_init_point;
+        if (!ip) {
+          reject(new Error("No se recibi\u00F3 el link de pago. Respuesta: " + JSON.stringify(json)));
+        } else {
+          resolve({ preferenceId: json.preferenceId || json.id, initPoint: ip });
+        }
       }
     })
     .catch(function(err) {
