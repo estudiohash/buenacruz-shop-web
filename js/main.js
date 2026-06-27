@@ -46,6 +46,7 @@ var productos = [
 ];
 
 var carrito = [];
+var pedidoConfirmado = false;
 var catalogoMemoria = [];
 var descuentoAplicado = 0;
 var codigoAplicado = "";
@@ -564,14 +565,8 @@ function enviarPedido() {
   var provincia = document.getElementById("f-provincia").value.trim();
   var localidad = document.getElementById("f-localidad").value.trim();
   var direccion = document.getElementById("f-direccion").value.trim();
-  var sucursal  = document.getElementById("f-sucursal").value.trim();
   if (!nombre || !telefono || !email || !provincia || !localidad || !direccion) {
     alert("Por favor completá todos los campos obligatorios.");
-    return;
-  }
-  var checkPago = document.getElementById("f-confirma-pago");
-  if (checkPago && !checkPago.checked) {
-    alert("Por favor confirmá que realizaste el pago antes de continuar.");
     return;
   }
   var productosStr = carrito.map(function(item) {
@@ -584,11 +579,11 @@ function enviarPedido() {
     provincia: provincia,
     localidad: localidad,
     direccion: direccion,
-    sucursal:  sucursal || "No especificada",
+    sucursal:  "No especificada",
     productos: productosStr,
     total:     formatoPrecio(calcularTotal()),
     descuento: descuentoAplicado > 0 ? codigoAplicado + " (" + descuentoAplicado + "%)" : "Sin descuento",
-    metodo_pago: "USDT (TRC20)"
+    metodo_pago: "Mercado Pago"
   };
   var btnEnviar = document.getElementById("btn-enviar-pedido");
   btnEnviar.textContent = "Enviando...";
@@ -596,13 +591,13 @@ function enviarPedido() {
   emailjs.init(EMAILJS_PUBLIC_KEY);
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
     .then(function() {
-      cerrarOverlay("modal-datos");
-      vaciarCarrito();
-      abrirOverlay("modal-confirmacion");
+      pedidoConfirmado = true;
+      btnEnviar.textContent = "✓ PEDIDO CONFIRMADO";
+      btnEnviar.disabled = true;
     })
     .catch(function(err) {
       console.error("EmailJS error:", err);
-      btnEnviar.textContent = "Confirmar pedido";
+      btnEnviar.textContent = "CONFIRMAR PEDIDO";
       btnEnviar.disabled = false;
       alert("Error al enviar el pedido. Revisá las claves de EmailJS en main.js.");
     });
@@ -751,11 +746,11 @@ function recargarCatalogo() {
   document.getElementById("btn-continuar-datos").addEventListener("click", function() {
     document.getElementById("checkout-mensaje").style.display = "none";
     document.getElementById("checkout-form").style.display    = "flex";
-    var chk = document.getElementById("f-confirma-pago");
-    if (chk) chk.checked = false;
     var btnEnviar = document.getElementById("btn-enviar-pedido");
-    btnEnviar.textContent = "Confirmar pedido";
-    btnEnviar.disabled = false;
+    if (!pedidoConfirmado) {
+      btnEnviar.textContent = "CONFIRMAR PEDIDO";
+      btnEnviar.disabled = false;
+    }
     abrirOverlay("modal-datos");
   });
 
@@ -768,6 +763,30 @@ function recargarCatalogo() {
     abrirOverlay("modal-pago");
   });
   document.getElementById("btn-enviar-pedido").addEventListener("click", enviarPedido);
+
+  document.getElementById("btn-whatsapp-pedido").addEventListener("click", function() {
+    var nombre    = document.getElementById("f-nombre").value.trim();
+    var telefono  = document.getElementById("f-telefono").value.trim();
+    var email     = document.getElementById("f-email").value.trim();
+    var provincia = document.getElementById("f-provincia").value.trim();
+    var localidad = document.getElementById("f-localidad").value.trim();
+    var direccion = document.getElementById("f-direccion").value.trim();
+    var productosStr = carrito.map(function(item) {
+      return "• " + item.nombre + (item.variante ? " — " + item.variante : "") + "  " + item.precio;
+    }).join("\n");
+    var total = formatoPrecio(calcularTotal());
+    var msg = "🛍 *Nuevo pedido — Tienda Buena Cruz*\n\n";
+    msg += "*Nombre:* " + (nombre || "—") + "\n";
+    msg += "*Teléfono:* " + (telefono || "—") + "\n";
+    msg += "*Email:* " + (email || "—") + "\n";
+    msg += "*Provincia:* " + (provincia || "—") + "\n";
+    msg += "*Localidad:* " + (localidad || "—") + "\n";
+    msg += "*Dirección:* " + (direccion || "—") + "\n";
+    msg += "\n*Productos:*\n" + (productosStr || "—") + "\n";
+    msg += "\n*Total: " + total + "*";
+    var numero = "5492236220228";
+    window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(msg), "_blank");
+  });
 
   document.getElementById("btn-cerrar-confirmacion").addEventListener("click", cerrarTodosLosOverlays);
   document.getElementById("modal-confirmacion").addEventListener("click", function(e) {

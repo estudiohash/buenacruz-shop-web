@@ -2056,3 +2056,42 @@ button, input, label, p, a,
     padding: 0.3rem 0.7rem;
   }
 }
+
+
+/* === Mercado Pago button & payment notice === */
+.btn-mercadopago {
+  background: #009ee3;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.btn-mercadopago:hover {
+  background: #0082c0;
+}
+.modal-aviso-pago {
+  font-size: 0.82rem;
+  color: var(--color-text-light, #888);
+  text-align: center;
+  margin: 0.3rem 0 0.8rem;
+  line-height: 1.45;
+}
+
+/* === WhatsApp pedido button === */
+.btn-whatsapp-pedido {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 0.2s;
+}
+.btn-whatsapp-pedido:hover {
+  background: #1ebe5d;
+}

@@ -198,19 +198,8 @@
       <button class="popup__cerrar carrito-cerrar-x" id="btn-cerrar-modal-pago">✕</button>
       <h2 class="modal__titulo">Resumen de Pago</h2>
       <div class="modal-resumen" id="modal-pago-resumen"></div>
-      <div class="usdt-box glass" id="bloque-usdt">
-        <h3 class="usdt-box__titulo">Pago en USDT (TRC20)</h3>
-        <div class="usdt-box__qr">
-          <img src="./img/qr-usdt.png" alt="QR USDT" loading="lazy" onerror="this.style.display='none'" />
-        </div>
-        <div class="usdt-box__datos">
-          <p>
-            <span class="label">Wallet:</span>
-            <span id="wallet-addr">TU_DIRECCION_WALLET_USDT</span>
-            <button class="btn-copy" id="btn-copy-wallet">Copiar</button>
-          </p>
-        </div>
-      </div>
+      <button class="btn-primary btn-mercadopago" id="btn-pagar-mercadopago">Pagar con Mercado Pago</button>
+      <p class="modal-aviso-pago">Una vez realizado el pago, el local validará la acreditación antes de procesar el pedido.</p>
       <button class="btn-primary" id="btn-continuar-datos">Continuar con mis datos →</button>
       <button class="btn-seguir-comprando" id="btn-volver-carrito-desde-pago">← Volver al carrito</button>
     </div>
@@ -219,44 +208,35 @@
   <div class="modal-overlay" id="modal-datos">
     <div class="modal glass">
       <button class="popup__cerrar carrito-cerrar-x" id="btn-cerrar-modal-datos">✕</button>
-      <h2 class="modal__titulo">Tus Datos de Envío</h2>
+      <h2 class="modal__titulo">TUS DATOS DE ENVÍO</h2>
       <form class="checkout-form" id="checkout-form" onsubmit="return false;">
         <div class="form-group">
-          <label>Nombre completo</label>
-          <input type="text" id="f-nombre" placeholder="Tu nombre" required />
+          <label>NOMBRE COMPLETO</label>
+          <input type="text" id="f-nombre" placeholder="TU NOMBRE" required />
         </div>
         <div class="form-group">
-          <label>Teléfono</label>
-          <input type="tel" id="f-telefono" placeholder="Tu teléfono" required />
+          <label>TELÉFONO</label>
+          <input type="tel" id="f-telefono" placeholder="TU TELÉFONO" required />
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="f-email" placeholder="Tu email" required />
+          <label>EMAIL</label>
+          <input type="email" id="f-email" placeholder="TU EMAIL" required />
         </div>
         <div class="form-group">
-          <label>Provincia</label>
-          <input type="text" id="f-provincia" placeholder="Provincia" required />
+          <label>PROVINCIA</label>
+          <input type="text" id="f-provincia" placeholder="PROVINCIA" required />
         </div>
         <div class="form-group">
-          <label>Localidad</label>
-          <input type="text" id="f-localidad" placeholder="Localidad" required />
+          <label>LOCALIDAD</label>
+          <input type="text" id="f-localidad" placeholder="LOCALIDAD" required />
         </div>
         <div class="form-group">
-          <label>Dirección</label>
-          <input type="text" id="f-direccion" placeholder="Calle, número, piso/depto" required />
+          <label>DIRECCIÓN</label>
+          <input type="text" id="f-direccion" placeholder="CALLE, NÚMERO, PISO/DEPTO" required />
         </div>
-        <div class="form-group">
-          <label>Sucursal correo</label>
-          <input type="text" id="f-sucursal" placeholder="Sucursal de correo más cercana" />
-        </div>
-        <div class="form-group form-group--check">
-          <label class="check-label">
-            <input type="checkbox" id="f-confirma-pago" />
-            <span>Confirmo que realicé el pago y entiendo que mi pedido será validado manualmente.</span>
-          </label>
-        </div>
-        <button type="button" class="btn-primary" id="btn-enviar-pedido">Confirmar pedido</button>
-        <button type="button" class="btn-seguir-comprando" id="btn-volver-modal-pago">← Volver al pago</button>
+        <button type="button" class="btn-primary" id="btn-enviar-pedido">CONFIRMAR PEDIDO</button>
+        <button type="button" class="btn-whatsapp-pedido" id="btn-whatsapp-pedido">ENVIAR PEDIDO POR WHATSAPP</button>
+        <button type="button" class="btn-seguir-comprando" id="btn-volver-modal-pago">← VOLVER AL PAGO</button>
       </form>
       <div class="checkout-mensaje" id="checkout-mensaje" style="display:none;"></div>
     </div>
