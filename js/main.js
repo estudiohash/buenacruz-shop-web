@@ -765,25 +765,31 @@ function recargarCatalogo() {
   document.getElementById("btn-enviar-pedido").addEventListener("click", enviarPedido);
 
   document.getElementById("btn-whatsapp-pedido").addEventListener("click", function() {
-    var nombre    = document.getElementById("f-nombre").value.trim();
-    var telefono  = document.getElementById("f-telefono").value.trim();
-    var email     = document.getElementById("f-email").value.trim();
-    var provincia = document.getElementById("f-provincia").value.trim();
-    var localidad = document.getElementById("f-localidad").value.trim();
-    var direccion = document.getElementById("f-direccion").value.trim();
-    var productosStr = carrito.map(function(item) {
-      return "• " + item.nombre + (item.variante ? " — " + item.variante : "") + "  " + item.precio;
-    }).join("\n");
+    var nombre    = document.getElementById("f-nombre").value.trim()    || "—";
+    var telefono  = document.getElementById("f-telefono").value.trim()  || "—";
+    var email     = document.getElementById("f-email").value.trim()     || "—";
+    var provincia = document.getElementById("f-provincia").value.trim() || "—";
+    var localidad = document.getElementById("f-localidad").value.trim() || "—";
+    var direccion = document.getElementById("f-direccion").value.trim() || "—";
+    var productosStr = carrito.length > 0
+      ? carrito.map(function(item) {
+          var nombre_item = item.nombre + (item.variante ? " — " + item.variante : "");
+          var precio_item = item.precio || formatoPrecio(item.precioUnitario || 0);
+          return "\u2022 " + nombre_item + " \u2014 " + precio_item;
+        }).join("\n")
+      : "\u2022 Sin productos";
     var total = formatoPrecio(calcularTotal());
-    var msg = "🛍 *Nuevo pedido — Tienda Buena Cruz*\n\n";
-    msg += "*Nombre:* " + (nombre || "—") + "\n";
-    msg += "*Teléfono:* " + (telefono || "—") + "\n";
-    msg += "*Email:* " + (email || "—") + "\n";
-    msg += "*Provincia:* " + (provincia || "—") + "\n";
-    msg += "*Localidad:* " + (localidad || "—") + "\n";
-    msg += "*Dirección:* " + (direccion || "—") + "\n";
-    msg += "\n*Productos:*\n" + (productosStr || "—") + "\n";
-    msg += "\n*Total: " + total + "*";
+    var msg  = "\uD83D\uDECD\uFE0F *NUEVO PEDIDO \u2014 TIENDA BUENA CRUZ*\n\n";
+    msg += "\uD83D\uDC64 *DATOS DEL CLIENTE*\n\n";
+    msg += "\u2022 Nombre: " + nombre + "\n";
+    msg += "\u2022 Tel\u00E9fono: " + telefono + "\n";
+    msg += "\u2022 Email: " + email + "\n";
+    msg += "\u2022 Provincia: " + provincia + "\n";
+    msg += "\u2022 Localidad: " + localidad + "\n";
+    msg += "\u2022 Direcci\u00F3n: " + direccion + "\n\n";
+    msg += "\uD83D\uDCE6 *PRODUCTOS*\n\n";
+    msg += productosStr + "\n\n";
+    msg += "\uD83D\uDCB0 *TOTAL: " + total + "*\n";
     var numero = "5492236220228";
     window.open("https://wa.me/" + numero + "?text=" + encodeURIComponent(msg), "_blank");
   });
