@@ -176,19 +176,27 @@ function crearTarjetaProducto(p) {
       '<span class="producto__imagen--placeholder" style="display:none">sin imagen</span>'
     : '<span class="producto__imagen--placeholder">sin imagen</span>';
   card.innerHTML =
-    '<div class="producto__imagen">' + imagenHTML + '</div>' +
+    '<div class="producto__imagen">' +
+      imagenHTML +
+      '<div class="producto__imagen-overlay">' +
+        '<button class="producto__overlay-btn producto__overlay-btn--carrito">+ Agregar al carrito</button>' +
+        '<button class="producto__overlay-btn producto__overlay-btn--ver">Ver producto</button>' +
+      '</div>' +
+    '</div>' +
     '<div class="producto__info">' +
       '<h3 class="producto__nombre">' + p.nombre + '</h3>' +
-      '<hr class="producto__divider">' +
       '<p class="producto__precio">' + p.precio + '</p>' +
-      '<button class="producto__btn">+ Agregar</button>' +
     '</div>';
   var abrirFn = function() { abrirPopup(p); };
   card.addEventListener("click", function(e) {
-    if (e.target.classList.contains("producto__btn")) return;
+    if (e.target.classList.contains("producto__overlay-btn--carrito")) return;
     abrirFn();
   });
-  card.querySelector(".producto__btn").addEventListener("click", function(e) {
+  card.querySelector(".producto__overlay-btn--carrito").addEventListener("click", function(e) {
+    e.stopPropagation();
+    abrirFn();
+  });
+  card.querySelector(".producto__overlay-btn--ver").addEventListener("click", function(e) {
     e.stopPropagation();
     abrirFn();
   });
@@ -207,7 +215,10 @@ function crearCarrusel(titulo, lista, idPrefix) {
   var header = document.createElement("div");
   header.className = "carrusel-header";
   header.innerHTML =
-    '<h2 class="carrusel__titulo">' + titulo + '</h2>' +
+    '<div class="carrusel-header__izq">' +
+      '<p class="carrusel__titulo">Colección</p>' +
+      '<h2 class="carrusel__heading">' + titulo + '</h2>' +
+    '</div>' +
     '<div class="carrusel-header__acciones">' +
       '<button class="carrusel__flecha carrusel__flecha--izq" aria-label="Anterior">&#8592;</button>' +
       '<button class="carrusel__flecha carrusel__flecha--der" aria-label="Siguiente">&#8594;</button>' +
