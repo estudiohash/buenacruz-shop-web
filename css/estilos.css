@@ -17,7 +17,7 @@
 
   --font-display:   "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-heading:   "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --font-body:      "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body:      "Archivo", "Helvetica Neue", Arial, sans-serif;
 
   --space-xs:  0.5rem;
   --space-sm:  1rem;
@@ -36,7 +36,7 @@ html {
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
 }
 
@@ -107,10 +107,10 @@ a {
 .header__nav {
   display: flex;
   align-items: center;
-  gap: 2.25rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  gap: 2rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #111;
 }
@@ -182,7 +182,7 @@ a {
    HERO — BOUTIQUE v5.0
    ===================== */
 .hero {
-  background: #f5f0ea;
+  background: #ffffff;
   border-bottom: 1px solid #e8e4df;
 }
 
@@ -335,7 +335,7 @@ a {
 .catalogo {
   width: 100%;
   background: #ffffff;
-  padding: var(--space-lg) var(--space-md);
+  padding: 0;
 }
 
 .catalogo__titulo {
@@ -511,8 +511,8 @@ a {
 .producto__nombre {
   font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  text-transform: none;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: #111111;
   line-height: 1.35;
 }
@@ -1048,8 +1048,8 @@ body.popup-abierto {
    FOOTER
    ===================== */
 .footer {
-  border-top: 1px solid #e8e4df;
-  background: #ffffff;
+  border-top: none;
+  background: #111;
   width: 100%;
 }
 
@@ -1071,29 +1071,31 @@ body.popup-abierto {
 
 .footer__logo {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #111;
+  color: #ffffff;
   margin-bottom: 0.25rem;
   line-height: 1;
 }
 
 .footer__copy {
-  font-size: 0.75rem;
-  color: #bbb;
-  letter-spacing: 0.04em;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #666;
   margin-top: auto;
   padding-top: 1.5rem;
 }
 
 .footer__col-titulo {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #999;
+  color: #666;
   margin-bottom: 0.5rem;
 }
 
@@ -1101,22 +1103,28 @@ body.popup-abierto {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.85rem;
-  color: #444;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ccc;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .footer__link:hover {
-  color: var(--color-accent);
+  color: #ffffff;
 }
 
 .footer__dato {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
-  font-size: 0.85rem;
-  color: #444;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ccc;
   line-height: 1.6;
   margin: 0;
 }
@@ -1641,6 +1649,59 @@ body.popup-abierto {
 .carrusel-seccion:last-child {
   border-bottom: none;
   padding-bottom: 3rem;
+}
+
+/* Segunda sección — fondo negro */
+#carruseles-container .carrusel-seccion:nth-child(2) {
+  max-width: 100%;
+  background: #111;
+  border-bottom: none;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  padding-left: max(var(--space-md), calc((100% - var(--max-width)) / 2 + var(--space-md)));
+  padding-right: max(var(--space-md), calc((100% - var(--max-width)) / 2 + var(--space-md)));
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .carrusel__titulo {
+  color: #666;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .carrusel__heading {
+  color: #fff;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .carrusel__flecha {
+  background: #fff;
+  border-color: #fff;
+  color: #111;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .carrusel__flecha:hover {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .carrusel__ver-todos {
+  border-color: #fff;
+  color: #fff;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .carrusel__ver-todos:hover {
+  background: #fff;
+  color: #111;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .producto__imagen {
+  background-color: #222;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .producto__nombre {
+  color: #fff;
+}
+
+#carruseles-container .carrusel-seccion:nth-child(2) .producto__precio {
+  color: #888;
 }
 
 /* Header de sección */
