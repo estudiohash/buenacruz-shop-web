@@ -46,6 +46,23 @@ var productos = [
 ];
 
 var carrito = [];
+var CARRITO_STORAGE_KEY = "buenacruz_carrito";
+
+function guardarCarritoStorage() {
+  try { localStorage.setItem(CARRITO_STORAGE_KEY, JSON.stringify(carrito)); } catch (e) {}
+}
+
+function cargarCarritoStorage() {
+  try {
+    var raw = localStorage.getItem(CARRITO_STORAGE_KEY);
+    carrito = raw ? (JSON.parse(raw) || []) : [];
+  } catch (e) {
+    carrito = [];
+  }
+}
+
+cargarCarritoStorage();
+
 var pedidoConfirmado = false;
 var catalogoMemoria = [];
 var descuentoAplicado = 0;
@@ -54,6 +71,7 @@ var codigoAplicado = "";
 function agregarItem(nombre, precioStr, precioNum, variante) {
   carrito.push({ nombre: nombre, variante: variante || "", precio: precioStr, precioNum: precioNum });
   actualizarContadorCarrito();
+  guardarCarritoStorage();
 }
 
 function agregarVariedades(nombre, precioStr, precioNum, variedades) {
@@ -61,12 +79,14 @@ function agregarVariedades(nombre, precioStr, precioNum, variedades) {
     carrito.push({ nombre: nombre, variante: v, precio: precioStr, precioNum: precioNum });
   });
   actualizarContadorCarrito();
+  guardarCarritoStorage();
 }
 
 function quitarDelCarrito(idx) {
   carrito.splice(idx, 1);
   actualizarContadorCarrito();
   renderizarCarrito();
+  guardarCarritoStorage();
 }
 
 function vaciarCarrito() {
@@ -75,6 +95,7 @@ function vaciarCarrito() {
   codigoAplicado = "";
   actualizarContadorCarrito();
   renderizarCarrito();
+  guardarCarritoStorage();
 }
 
 function actualizarContadorCarrito() {
@@ -205,7 +226,6 @@ function crearTarjetaProducto(p) {
 
 function crearCarrusel(titulo, lista, idPrefix) {
   var VISIBLE = 9;
-  var estaExpandido = false;
 
   var seccion = document.createElement("section");
   seccion.className = "carrusel-seccion";
@@ -222,7 +242,7 @@ function crearCarrusel(titulo, lista, idPrefix) {
     '<div class="carrusel-header__acciones">' +
       '<button class="carrusel__flecha carrusel__flecha--izq" aria-label="Anterior">&#8592;</button>' +
       '<button class="carrusel__flecha carrusel__flecha--der" aria-label="Siguiente">&#8594;</button>' +
-      '<button class="carrusel__ver-todos">Ver todos (' + lista.length + ')</button>' +
+      '<a class="carrusel__ver-todos" href="catalogo.html?categoria=' + encodeURIComponent(titulo) + '">Ver todos (' + lista.length + ')</a>' +
     '</div>';
 
   // Track
@@ -233,23 +253,12 @@ function crearCarrusel(titulo, lista, idPrefix) {
   track.className = "carrusel-track";
   trackWrap.appendChild(track);
 
-  // Grid expandido (oculto por defecto)
-  var gridTodos = document.createElement("div");
-  gridTodos.className = "catalogo__grid carrusel-grid-todos";
-  gridTodos.style.display = "none";
-
   seccion.appendChild(header);
   seccion.appendChild(trackWrap);
-  seccion.appendChild(gridTodos);
 
   // Render inicial: primeros VISIBLE productos en carrusel
   lista.slice(0, VISIBLE).forEach(function(p) {
     track.appendChild(crearTarjetaProducto(p));
-  });
-
-  // Render completo en grid
-  lista.forEach(function(p) {
-    gridTodos.appendChild(crearTarjetaProducto(p));
   });
 
   // Flechas
@@ -264,31 +273,6 @@ function crearCarrusel(titulo, lista, idPrefix) {
     trackWrap.scrollBy({ left: SCROLL_PX, behavior: "smooth" });
   });
 
-  // Ocultar flechas cuando grid está expandido
-  function actualizarFlechas() {
-    var visible = !estaExpandido;
-    btnIzq.style.display = visible ? "" : "none";
-    btnDer.style.display = visible ? "" : "none";
-  }
-
-  // Ver todos
-  var btnVerTodos = header.querySelector(".carrusel__ver-todos");
-  btnVerTodos.addEventListener("click", function() {
-    estaExpandido = !estaExpandido;
-    if (estaExpandido) {
-      trackWrap.style.display = "none";
-      gridTodos.style.display = "grid";
-      btnVerTodos.textContent = "← Ver menos";
-    } else {
-      trackWrap.style.display = "";
-      gridTodos.style.display = "none";
-      btnVerTodos.textContent = "Ver todos (" + lista.length + ")";
-      seccion.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    actualizarFlechas();
-  });
-
-  actualizarFlechas();
   return seccion;
 }
 
@@ -312,9 +296,79 @@ function renderizarCarruseles(lista) {
   });
 }
 
+/* =====================================================
+   PÁGINA CATÁLOGO COMPLETO (catalogo.html)
+   ===================================================== */
+function renderizarCatalogoCompleto(lista) {
+  var tabsContainer = document.getElementById("catalogo-tabs");
+  var grid = document.getElementById("catalogo-grid");
+  if (!tabsContainer || !grid) return;
+
+  var categorias = [];
+  lista.forEach(function(p) {
+    var cat = (p.tipo || "Sin categoría").trim();
+    if (categorias.indexOf(cat) === -1) categorias.push(cat);
+  });
+
+  var params = new URLSearchParams(window.location.search);
+  var catInicial = params.get("categoria") || "todos";
+  var catActiva = catInicial.toLowerCase() === "todos" ? "todos" : catInicial;
+
+  function pintarGrid(categoria) {
+    grid.innerHTML = "";
+    var filtrada = categoria === "todos"
+      ? lista
+      : lista.filter(function(p) { return (p.tipo || "Sin categoría").trim() === categoria; });
+
+    if (filtrada.length === 0) {
+      grid.innerHTML = '<p style="color:var(--color-muted);padding:2rem 0;">No hay productos en esta categoría.</p>';
+      return;
+    }
+    filtrada.forEach(function(p) {
+      grid.appendChild(crearTarjetaProducto(p));
+    });
+  }
+
+  function pintarTabs() {
+    tabsContainer.innerHTML = "";
+    var todas = ["todos"].concat(categorias);
+    todas.forEach(function(cat) {
+      var btn = document.createElement("button");
+      btn.className = "catalogo-tab" + (cat === catActiva ? " catalogo-tab--activo" : "");
+      btn.textContent = cat === "todos" ? "Todos" : cat;
+      btn.addEventListener("click", function() {
+        catActiva = cat;
+        tabsContainer.querySelectorAll(".catalogo-tab").forEach(function(b) {
+          b.classList.remove("catalogo-tab--activo");
+        });
+        btn.classList.add("catalogo-tab--activo");
+        pintarGrid(catActiva);
+        var url = new URL(window.location.href);
+        if (cat === "todos") url.searchParams.delete("categoria");
+        else url.searchParams.set("categoria", cat);
+        window.history.replaceState({}, "", url);
+      });
+      tabsContainer.appendChild(btn);
+    });
+  }
+
+  // Si la categoría de la URL no existe en la data, mostrar todos
+  if (catActiva !== "todos" && categorias.indexOf(catActiva) === -1) {
+    catActiva = "todos";
+  }
+
+  pintarTabs();
+  pintarGrid(catActiva);
+}
+
+function renderizarPagina(lista) {
+  renderizarCarruseles(lista);
+  renderizarCatalogoCompleto(lista);
+}
+
 // Mantener compatibilidad: si algo llama renderizarProductos, no rompe
 function renderizarProductos(lista) {
-  renderizarCarruseles(lista);
+  renderizarPagina(lista);
 }
 
 var productoActual  = null;
@@ -744,6 +798,8 @@ function recargarCatalogo() {
 }
 
   document.addEventListener("DOMContentLoaded", function() {
+
+  actualizarContadorCarrito();
 
   // Carga inicial — una sola descarga del CSV
   cargarCatalogo();
