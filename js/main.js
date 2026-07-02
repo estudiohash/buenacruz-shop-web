@@ -744,15 +744,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   document.getElementById("btn-enviar-pedido").addEventListener("click", enviarPedido);
 
-  /* ── Copiar wallet ── */
-  document.getElementById("btn-copy-wallet").addEventListener("click", function() {
-    var wallet = document.getElementById("wallet-addr").textContent;
-    navigator.clipboard.writeText(wallet).then(function() {
-      var btn = document.getElementById("btn-copy-wallet");
-      btn.textContent = "✓ Copiado";
-      setTimeout(function() { btn.textContent = "Copiar"; }, 2000);
-    });
-  });
+
 
   /* ── ESC: cierra cualquier overlay abierto ── */
   document.addEventListener("keydown", function(e) {
